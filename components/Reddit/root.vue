@@ -1,4 +1,5 @@
 <template>
+  <!-- <div class="h-screen"> -->
   <div class="flex flex-row items-center justify-between">
     <div class="">
       <Side />
@@ -7,10 +8,11 @@
       <Main />
     </div>
   </div>
+  <!-- </div> -->
 </template>
 <script>
 import Side from './sidebar'
-import Main from './main'
+import Main from './container'
 
 export default {
   components: {
