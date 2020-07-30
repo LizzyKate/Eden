@@ -1,11 +1,13 @@
 <template>
   <div class="bg-gray-200 h-screen overflow-y-scroll">
-    <Post
-      v-for="(reddit, i) in tweet"
-      :key="i"
-      :data="reddit.data"
-      class="mt-8"
-    />
+    <transition-group name="flip-list">
+      <Post
+        v-for="reddit in tweet"
+        :key="reddit.data.id"
+        :data="reddit.data"
+        class="mt-8"
+      />
+    </transition-group>
     <Load v-if="wait" />
   </div>
 </template>
@@ -32,4 +34,8 @@ export default {
   },
 }
 </script>
-<style scoped></style>
+<style scoped>
+.flip-list-move {
+  transition: all transform 0.5s;
+}
+</style>

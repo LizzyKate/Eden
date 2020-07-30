@@ -12,8 +12,9 @@ export const mutations = {
     if (payload === '') {
       state.Post = state.postClone
     } else {
-      const x = state.postClone.filter((e) => e.data.title.includes(payload))
-      state.Post = x
+      state.Post = state.postClone.filter((e) =>
+        e.data.title.toLowerCase().includes(payload.toLowerCase())
+      )
     }
   },
   moreVotes(state) {
@@ -33,8 +34,11 @@ export const mutations = {
 }
 
 export const actions = {
-  async getIncidents({ commit }) {
-    const res = await this.$axios.$get('')
-    commit('getData', res.data.children)
+  async getIncidents({ commit, state }) {
+    if (state.Post.length) {
+    } else {
+      const res = await this.$axios.$get('')
+      commit('getData', res.data.children)
+    }
   },
 }
