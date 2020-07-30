@@ -44,7 +44,11 @@
           <img :src="data.thumbnail" class="w-full" alt="" />
         </div>
         <div class="mt-8">
-          <h5 class="break-word">{{ data.title }}</h5>
+          <a :href="'https://www.reddit.com' + data.permalink">
+            <h5 class="break-word cursor-pointer hover:text-red-400">
+              {{ data.title }}
+            </h5>
+          </a>
         </div>
         <div class="mt-8">
           <p class="text-base mb-0 break-word text-red-900">
