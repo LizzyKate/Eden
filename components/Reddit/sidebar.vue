@@ -15,127 +15,100 @@
             @input="search"
           />
         </div>
+        <!-- Sort By -->
 
-        <nav class="mt-10">
+        <nav class="mt-5">
+          <!-- <h3>Subreddits</h3> -->
           <div>
             <button
               class="w-full text-left py-3 px-6 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-              :class="active === 'Popular' ? 'changed' : ''"
-              @click="popular()"
+              :class="active === 'Trump' ? 'changed' : ''"
+              @click="getSubReddit('Trump')"
             >
-              <span class="mx-4 font-medium">Popular</span>
+              <span class="mx-4 font-medium">Trump</span>
             </button>
           </div>
 
           <div>
             <button
               class="w-full text-left py-3 px-6 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-              :class="active === 'Unpopular' ? 'changed' : ''"
-              @click="least()"
+              :class="active === 'Sports' ? 'changed' : ''"
+              @click="getSubReddit('Sports')"
             >
-              <span class="mx-4 font-medium">UnPopular</span>
+              <span class="mx-4 font-medium"> Sports </span>
             </button>
           </div>
           <div>
             <button
               class="w-full text-left py-3 px-6 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-              :class="active === 'Recent' ? 'changed' : ''"
-              @click="recent()"
+              :class="active === 'Fashion' ? 'changed' : ''"
+              @click="getSubReddit('Fashion')"
             >
-              <span class="mx-4 font-medium">Recent</span>
+              <span class="mx-4 font-medium">Fashion</span>
             </button>
           </div>
           <div>
             <button
               class="w-full text-left py-3 px-6 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-              @click="old()"
+              @click="getSubReddit('Politics')"
             >
               <span
                 class="mx-4 font-medium"
-                :class="active === 'Old' ? 'changed' : ''"
-                >Old</span
+                :class="active === 'Politics' ? 'changed' : ''"
+                >Politics</span
               >
             </button>
           </div>
+          <DropDown />
+          <FilterComponent />
         </nav>
-
-        <div class="absolute bottom-0 my-8">
-          <span class="px-8">
-            <i class="ml-2 fas fa-shoe-prints"></i>
-          </span>
-        </div>
       </div>
     </div>
+
+    <!-- mobile version -->
     <div class="px-4 bg-white lg:hidden inline-block">
-      <div class="w-full h-screen">
+      <div class="h-screen w-10 md:w-24">
         <div class="flex items-center ml-2 pt-10 w-full">
           <img src="/img/reddit.png" class="w-8" alt="" />
         </div>
         <nav class="pt-10">
           <div
-            class="text-center"
-            :class="active === 'Popular' ? 'changed' : ''"
-            @click="popular()"
+            class
+            :class="active === 'Trump' ? 'changed' : ''"
+            @click="getSubReddit('Trump')"
           >
-            <button
-              class="flex ml-4 items-center py-3 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-            >
-              <span>
-                <i class="fas fa-blog"></i>
-              </span>
-            </button>
-
-            <p class="text-xs">Popular</p>
+            <p class="text-xs">Trump</p>
           </div>
 
           <div
-            class="text-center"
-            :class="active === 'Unpopular' ? 'changed' : ''"
-            @click="least()"
+            class
+            :class="active === 'Sports' ? 'changed' : ''"
+            @click="getSubReddit('Sports')"
           >
-            <button
-              class="flex ml-4 items-center py-3 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-            >
-              <span>
-                <i class="fab fa-lastfm"></i>
-              </span>
-            </button>
-            <div>
-              <p class="text-xs">Unpopular</p>
+            <div class="mt-6">
+              <p class="text-xs">Sports</p>
             </div>
           </div>
           <div
-            class="text-center"
-            :class="active === 'Recent' ? 'changed' : ''"
-            @click="recent()"
+            class
+            :class="active === 'Fashion' ? 'changed' : ''"
+            @click="getSubReddit('Fashion')"
           >
-            <button
-              class="flex ml-4 items-center py-3 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-            >
-              <span>
-                <i class="far fa-newspaper"></i>
-              </span>
-            </button>
-            <div>
-              <p class="text-xs">Recent</p>
+            <div class="mt-6">
+              <p class="text-xs">Fashion</p>
             </div>
           </div>
           <div
-            class="text-center"
-            :class="active === 'Old' ? 'changed' : ''"
-            @click="old()"
+            class
+            :class="active === 'Politics' ? 'changed' : ''"
+            @click="getSubReddit('Politics')"
           >
-            <button
-              class="flex ml-4 items-center py-3 text-gray-600 cursor-pointer hover:bg-gray-100 hover:text-gray-700 focus:outline-none"
-            >
-              <span>
-                <i class="fab fa-old-republic"></i>
-              </span>
-            </button>
-            <div>
-              <p class="text-xs">Old</p>
+            <div class="mt-6">
+              <p class="text-xs">Politics</p>
             </div>
           </div>
+          <DropDown />
+          <FilterComponent />
         </nav>
 
         <div class="absolute bottom-0 my-8">
@@ -146,7 +119,13 @@
   </div>
 </template>
 <script>
+import DropDown from './sort-dropdown'
+import FilterComponent from './filter'
 export default {
+  components: {
+    DropDown,
+    FilterComponent,
+  },
   data() {
     return {
       searchterm: '',
@@ -157,21 +136,11 @@ export default {
     search() {
       this.$store.commit('data/duplicateClone', this.searchterm)
     },
-    popular() {
-      this.active = 'Popular'
-      this.$store.commit('data/moreVotes')
-    },
-    least() {
-      this.active = 'Unpopular'
-      this.$store.commit('data/lessVotes')
-    },
-    recent() {
-      this.active = 'Recent'
-      this.$store.commit('data/mostRecentPosts')
-    },
-    old() {
-      this.active = 'Old'
-      this.$store.commit('data/leastRecentPosts')
+    async getSubReddit(value) {
+      this.$store.commit('spin/loading', true)
+      this.active = value
+      await this.$store.dispatch('data/getSubrreddits', value)
+      this.$store.commit('spin/loading', false)
     },
   },
 }

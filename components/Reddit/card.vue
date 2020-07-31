@@ -13,9 +13,12 @@
             <i class="fas fa-sort-down"></i>
           </div>
         </div>
-        <div v-if="fix(data.thumbnail)" class="ml-4 w-40">
-          <div>
+        <div class="ml-4 w-40">
+          <div v-if="fix(data.thumbnail)">
             <img :src="data.thumbnail" class="w-full" alt="" />
+          </div>
+          <div v-else>
+            <img src="/img/reddit-alien.jpg" />
           </div>
         </div>
         <div class="ml-8 flex-1">
@@ -42,6 +45,9 @@
       <div class="lg:hidden inline-block w-full">
         <div v-if="fix(data.thumbnail)" class="w-full">
           <img :src="data.thumbnail" class="w-full" alt="" />
+        </div>
+        <div v-else class="w-full">
+          <img src="/img/reddit-alien.jpg" class="w-full" />
         </div>
         <div class="mt-8">
           <a :href="'https://www.reddit.com' + data.permalink">
@@ -87,7 +93,7 @@ export default {
   },
   methods: {
     fix(value) {
-      if (value === 'self' || value === 'default') {
+      if (value.length < 20) {
         return false
       }
       return true

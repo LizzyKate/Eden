@@ -17,6 +17,15 @@ export const mutations = {
       )
     }
   },
+  filterPost(state, payload) {
+    state.Post = state.postClone.filter((e) => {
+      if (payload.from > 0 || payload.to > 0) {
+        if (+e.data.ups > +payload.from && +e.data.ups < payload.to) {
+          return e
+        }
+      } else return e
+    })
+  },
   moreVotes(state) {
     state.Post.sort((a, b) => {
       return +b.data.ups - +a.data.ups
@@ -34,11 +43,12 @@ export const mutations = {
 }
 
 export const actions = {
-  async getIncidents({ commit, state }) {
-    if (state.Post.length) {
-    } else {
-      const res = await this.$axios.$get('')
-      commit('getData', res.data.children)
-    }
+  async getIncidents({ commit }) {
+    const res = await this.$axios.$get('.json')
+    commit('getData', res.data.children)
+  },
+  async getSubrreddits({ commit }, payload) {
+    const res = await this.$axios.$get('/r/' + payload + '.json')
+    commit('getData', res.data.children)
   },
 }

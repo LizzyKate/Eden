@@ -9,14 +9,19 @@
         @input="search"
       />
     </div>
-    <transition-group name="flip-list">
-      <Post
-        v-for="reddit in tweet"
-        :key="reddit.data.id"
-        :data="reddit.data"
-        class="mt-8"
-      />
-    </transition-group>
+    <div v-if="tweet.length > 0">
+      <transition-group name="flip-list">
+        <Post
+          v-for="reddit in tweet"
+          :key="reddit.data.id"
+          :data="reddit.data"
+          class="mt-8"
+        />
+      </transition-group>
+    </div>
+    <div v-else class="mt-40">
+      <h3 class="text-center text-xl">No Post Found</h3>
+    </div>
     <Load v-if="wait" />
   </div>
 </template>
