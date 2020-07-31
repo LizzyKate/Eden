@@ -3,7 +3,7 @@
     <div class="w-64 bg-white hidden lg:inline-block">
       <div class="w-full h-screen">
         <div
-          class="flex items-center justify-center pt-10 w-full"
+          class="flex items-center justify-center pt-10 w-full cursor-pointer"
           @click="home()"
         >
           <img src="/img/reddit.png" class="w-8" alt="" />
@@ -147,7 +147,7 @@ export default {
     },
     async home() {
       this.$store.commit('spin/loading', true)
-      await this.$store.dispatch('data/getIncident')
+      await this.$store.dispatch('data/getIncidents')
       this.$store.commit('spin/loading')
     },
   },
