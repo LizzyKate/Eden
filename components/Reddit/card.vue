@@ -30,7 +30,12 @@
             </a>
           </div>
           <div class="p-1">
-            <p class="text-sm mb-0">Subreddit: {{ data.subreddit }}</p>
+            <p
+              class="text-sm mb-0 cursor-pointer font-bold"
+              @click="getSubReddit(data.subreddit)"
+            >
+              Subreddit: {{ data.subreddit }}
+            </p>
           </div>
           <div class="p-1">
             <p class="text-sm text-red-900 mb-0">Posted by {{ data.author }}</p>
@@ -59,6 +64,14 @@
         <div class="mt-8">
           <p class="text-base mb-0 break-word text-red-900">
             Posted By: {{ data.author }}
+          </p>
+        </div>
+        <div class="mt-4">
+          <p
+            class="text-sm mb-0 cursor-pointer font-bold"
+            @click="getSubReddit(data.subreddit)"
+          >
+            Subreddit: {{ data.subreddit }}
           </p>
         </div>
         <div class="flex flex-row items-center justify-between mt-4">
@@ -97,6 +110,11 @@ export default {
         return false
       }
       return true
+    },
+    async getSubReddit(value) {
+      this.$store.commit('spin/loading', true)
+      await this.$store.dispatch('data/getSubrreddits', value)
+      this.$store.commit('spin/loading', false)
     },
   },
 }
