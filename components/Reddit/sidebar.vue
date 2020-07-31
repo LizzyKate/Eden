@@ -2,7 +2,10 @@
   <div class="font-sans">
     <div class="w-64 bg-white hidden lg:inline-block">
       <div class="w-full h-screen">
-        <div class="flex items-center justify-center pt-10 w-full">
+        <div
+          class="flex items-center justify-center pt-10 w-full"
+          @click="home()"
+        >
           <img src="/img/reddit.png" class="w-8" alt="" />
         </div>
 
@@ -68,7 +71,7 @@
     <!-- mobile version -->
     <div class="px-4 bg-white lg:hidden inline-block">
       <div class="h-screen w-10 md:w-24">
-        <div class="flex items-center ml-2 pt-10 w-full">
+        <div class="flex items-center ml-2 pt-10 w-full" @click="home()">
           <img src="/img/reddit.png" class="w-8" alt="" />
         </div>
         <nav class="pt-10">
@@ -141,6 +144,11 @@ export default {
       this.active = value
       await this.$store.dispatch('data/getSubrreddits', value)
       this.$store.commit('spin/loading', false)
+    },
+    async home() {
+      this.$store.commit('spin/loading', true)
+      await this.$store.dispatch('data/getIncident')
+      this.$store.commit('spin/loading')
     },
   },
 }
